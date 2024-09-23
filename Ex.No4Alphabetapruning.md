@@ -1,34 +1,39 @@
-# Ex.No: 4   Implementation of Alpha Beta Pruning 
-### DATE:                                                                            
-### REGISTER NUMBER : 
+# Ex.No: 6   Logic Programming – Factorial of number   
+### DATE:  23-09-24                                                                          
+### REGISTER NUMBER : 212222040042
 ### AIM: 
-Write a Alpha beta pruning algorithm to find the optimal value of MAX Player from the given graph.
-### Steps:
+To  write  a logic program  to solve Towers of Hanoi problem  using SWI-PROLOG. 
+### Algorithm:
 1. Start the program
-2. Initially  assign MAX and MIN value as 1000 and -1000.
-3.  Define the minimax function  using alpha beta pruning
-4.  If maximum depth is reached then return the score value of leaf node. [depth taken as 3]
-5.  In Max player turn, assign the alpha value by finding the maximum value by calling the minmax function recursively.
-6.  In Min player turn, assign beta value by finding the minimum value by calling the minmax function recursively.
-7.  Specify the score value of leaf nodes and Call the minimax function.
-8.  Print the best value of Max player.
-9.  Stop the program. 
+2.  Write a rules for finding solution of Towers of Hanoi in SWI-PROLOG.
+3.  a )	If only one disk  => Move disk from X to Y.
+4.  b)	If Number of disk greater than 0 then
+5.        i)	Move  N-1 disks from X to Z.
+6.        ii)	Move  Nth disk from X to Y
+7.        iii)	Move  N-1 disks from Y to X.
+8. Run the program  to find answer of  query.
 
 ### Program:
 
-
-
-
-
-
-
-
-
-
+``` py
+move(1,X,Y,_) :-  
+    write('Move top disk from '), 
+    write(X), 
+    write(' to '), 
+    write(Y), 
+    nl. 
+move(N,X,Y,Z) :- 
+    N>1, 
+    M is N-1, 
+    move(M,X,Z,Y), 
+    move(1,X,Y,_), 
+    move(M,Z,Y,X).
+```
 
 ### Output:
 
+![image](https://github.com/user-attachments/assets/d219594e-6127-4a18-8ea6-3beed251c01e)
 
 
 ### Result:
-Thus the best score of max player was found using Alpha Beta Pruning.
+Thus the solution of Towers of Hanoi problem was found by logic programming.
