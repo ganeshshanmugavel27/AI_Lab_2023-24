@@ -1,4 +1,4 @@
-# Ex.No: 9  Logic Programming –  Computer Maintenance Expert System
+# Ex.No: 11  Logic Programming –  Computer Maintenance Expert System
 ### DATE:  23-09-24                                                                         
 ### REGISTER NUMBER : 212222040042
 ### AIM: 
