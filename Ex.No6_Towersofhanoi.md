@@ -1,4 +1,4 @@
-### Ex.No6_Towersofhanoi                                                                         
+### Ex.No6 Towersofhanoi                                                                         
 ### REGISTER NUMBER : 212222040042
 ### AIM: 
 To  write  a logic program  to solve Towers of Hanoi problem  using SWI-PROLOG. 
