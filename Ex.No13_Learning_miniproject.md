@@ -1,4 +1,4 @@
-# Ex.No: 10 Learning_miniproject
+# Ex.No: 10 MachineLearning-miniproject
 ### DATE:24/10/2024                                                                        
 ### REGISTER NUMBER :212222040042
 ### Weather Prediction Model Using Random Forest Regression
