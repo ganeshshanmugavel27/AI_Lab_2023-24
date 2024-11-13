@@ -5,11 +5,11 @@
 ### AIM: 
 To build a machine learning model that predicts average daily temperatures based on historical weather data, using a regression approach.
 ###  Algorithm:
-Data Preprocessing: Load data, remove missing values, and split it into features (X) and target (y).
-Train-Test Split: Divide data into training and testing sets.
-Model Selection: Use a Random Forest Regressor to predict average temperature.
-Training: Train the model on the training data.
-Evaluation: Assess model accuracy using Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and visualize results with a pie chart.
+- Data Preprocessing: Load data, remove missing values, and split it into features (X) and target (y).
+- Train-Test Split: Divide data into training and testing sets.
+- Model Selection: Use a Random Forest Regressor to predict average temperature.
+- Training: Train the model on the training data.
+- Evaluation: Assess model accuracy using Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and visualize results with a pie chart.
 ### Program:
 ```python
 # Import necessary libraries
