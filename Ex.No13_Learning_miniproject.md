@@ -1,75 +1,83 @@
-# Ex.No: 10 Learning – Use Supervised Learning  
-### DATE:                                                                            
-### REGISTER NUMBER :212222040022 
+# Ex.No: 10 Learning_miniproject
+### DATE:13/11/2024                                                                        
+### REGISTER NUMBER :212222040042
+### Weather Prediction Model Using Random Forest Regression
 ### AIM: 
-To write a program to train the classifier for Car Recommentation System.
+To build a machine learning model that predicts average daily temperatures based on historical weather data, using a regression approach.
 ###  Algorithm:
-1.Load and Explore Dataset: Import libraries, load the dataset, and check data structure.
-2.Data Preprocessing: Encode categorical variables (like fuel and transmission) into numerical values for analysis.
-3.Feature Selection and Scaling: Select relevant features (year, km_driven, etc.) and scale them using StandardScaler to normalize.
-4.Clustering: Apply KMeans clustering to group cars into three categories (Budget-Friendly, Mid-Range, Luxury) based on selected features.
-5.Visualization: Plot distributions of car prices by category and fuel type across categories to understand patterns.
-6.Car Recommendation Function: Define recommend_cars() to filter cars by budget and optional preferences (fuel type, transmission), and test with example inputs.
+Data Preprocessing: Load data, remove missing values, and split it into features (X) and target (y).
+Train-Test Split: Divide data into training and testing sets.
+Model Selection: Use a Random Forest Regressor to predict average temperature.
+Training: Train the model on the training data.
+Evaluation: Assess model accuracy using Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and visualize results with a pie chart.
 ### Program:
-```
+```python
+# Import necessary libraries
 import pandas as pd
-import numpy as n
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
-# Load dataset
-dataset = pd.read_csv('car-details-from-car-dekho.csv')
-print(dataset.head())
-print(dataset.tail())
-# Print columns to confirm structure
-print("Columns in dataset:", dataset.columns)
-# Encode categorical variables
-categorical_columns = ['fuel', 'seller_type', 'transmission', 'owner']
-for column in categorical_columns:
-    dataset[column] = pd.factorize(dataset[column])[0]
-# Define features and scale them
-X = dataset[['year', 'km_driven', 'fuel', 'seller_type', 'transmission', 'owner']]
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-# Apply KMeans clustering to segment cars into price categories
-kmeans = KMeans(n_clusters=3, random_state=42)
-dataset['cluster'] = kmeans.fit_predict(X_scaled)
-# Map cluster labels to car categories
-dataset['category'] = dataset['cluster'].map({
-    0: 'Budget-Friendly',
-    1: 'Mid-Range',
-    2: 'Luxury'
-})
-# Plot distribution of car prices by category
-plt.figure(figsize=(10, 6))
-sns.histplot(data=dataset, x='selling_price', hue='category', kde=True, palette='viridis')
-plt.title("Car Price Distribution by Category")
-plt.xlabel("Selling Price")
-plt.ylabel("Number of Cars")
-plt.legend(title='Category')
+
+# Load the dataset (replace with your file path if needed)
+file_path = '/content/weather_prediction_dataset.csv'  # adjust path as per Colab
+data = pd.read_csv(file_path)
+
+# Select the target variable
+target = 'BASEL_temp_mean'
+
+# Drop any columns with missing values for simplicity
+data = data.dropna(axis=1)
+
+# Split the data into features and target
+X = data.drop(columns=[target, 'DATE', 'MONTH'])
+y = data[target]
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize and train the RandomForest model
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = model.predict(X_test)
+
+# Calculate accuracy metrics
+mae = mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+
+# Define maximum temperature range for comparison (accuracy visualization)
+temp_range = y.max() - y.min()
+accuracy_proportion = (temp_range - mae) / temp_range * 100
+error_proportion = mae / temp_range * 100
+
+# Display accuracy metrics
+print(f"Mean Absolute Error (MAE): {mae}")
+print(f"Root Mean Squared Error (RMSE): {rmse}")
+print(f"Accuracy Proportion: {accuracy_proportion:.2f}%")
+print(f"Error Proportion: {error_proportion:.2f}%")
+
+# Plot pie chart of accuracy vs error
+labels = ['Accuracy', 'Error']
+sizes = [accuracy_proportion, error_proportion]
+colors = ['#66b3ff', '#ff6666']
+explode = (0.1, 0)  # explode 1st slice for emphasis
+
+plt.figure(figsize=(8, 6))
+plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=140)
+plt.title("Accuracy vs Error Proportion in Temperature Prediction")
 plt.show()
-# Plot fuel type distribution for each category
-plt.figure(figsize=(10, 6))
-sns.countplot(data=dataset, x='fuel', hue='category', palette='viridis')
-plt.title("Fuel Type Distribution by Car Category")
-plt.xlabel("Fuel Type")
-plt.ylabel("Number of Cars")
-plt.legend(title='Category')
-plt.show()
-# Function to recommend cars based on budget and other preferences
-def recommend_cars(budget, fuel_type=None, transmission=None):
-    recommendations = dataset[(dataset['selling_price'] <= budget)]
-    if fuel_type is not None:
-        recommendations = recommendations[recommendations['fuel'] == fuel_type]
-    if transmission is not None:
-        recommendations = recommendations[recommendations['transmission'] == transmission]
-    return recommendations[['year', 'km_driven', 'selling_price', 'category']]
-# Example recommendations
-print(recommend_cars(budget=500000, fuel_type=1, transmission=1).head())
+
 ```
 ### Output:
+![image](https://github.com/user-attachments/assets/dfd855de-c7c2-45fb-9648-3c74dff34857)
+![image](https://github.com/user-attachments/assets/eafb96b0-f138-4474-b12d-c158e1cbedc9)
+
+
 
 
 ### Result:
-Thus the system was trained successfully and the prediction was carried out.
+
+The model's performance is evaluated with Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE) to measure prediction accuracy. Additionally, an accuracy vs. error pie chart visually shows the model's effectiveness in predicting temperatures.
